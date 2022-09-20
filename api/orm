@@ -1,0 +1,90 @@
+from django.db import models
+
+class Books(models.Model):
+    name=models.CharField(max_length=200)
+    author=models.CharField(max_length=200)
+    price=models.PositiveIntegerField()
+    publisher=models.CharField(max_length=200)
+    qty=models.PositiveIntegerField(default=1)
+
+
+
+orm query for creating an object
+================================
+Modelname.objects.create(field1=value,field2=value........)
+
+Books.objects.create(name="randamozham",author="MT",price=450,publisher="abc",qty=5)
+
+Books.objects.create(name="arachar",author="Meera",price=350,publisher="xyz",qty=10)
+
+
+
+list all items
+========================
+Modelname.objects.all()
+
+
+qs=Books.objects.all()
+qs
+
+
+
+fetching a specific resource
+============================
+Modelname.objects.get()
+
+data=Books.objects.get(id=2)
+data
+
+
+data.name
+'Arachar'
+
+
+filter data
+=============================
+Modelname.objects.filter(price__lt=300)
+
+pr=Books.objects.filter(price__lt=300)
+pr
+
+
+
+exclude
+===============================
+data=Books.objects.all().exclude(price=199)
+
+
+
+Range(filed lookups)
+================================
+data=Books.objects.filter(price__gte=400,price__lte=699)
+data
+
+
+
+to get book name where publisher is Rupa & Co
+=============================================
+data=Books.objects.filter(publisher="Rupa & Co")
+data
+
+
+
+
+sort
+================================================
+Books.objects.order_by('-price')    ---in desc order
+
+
+
+
+update
+===============================================
+Books.objects.filter(id=2).update(price=300)
+
+
+
+
+delete
+================================================
+Books.objects.filter(id=11).delete()

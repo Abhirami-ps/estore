@@ -1,5 +1,21 @@
 from rest_framework import serializers
 from api.models import Reviews
+from api.models import Books
+from django.contrib.auth.models import User
+
+
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model=User
+        fields=["first_name","last_name","email","username","password"]
+
+    def create(self, validated_data):
+        return User.objects.create_user(**validated_data)
+
+
 
 
 
@@ -10,6 +26,22 @@ class BookSerializer(serializers.Serializer):
     price=serializers.IntegerField()
     publisher=serializers.CharField()
     qty=serializers.IntegerField()
+
+
+
+    def create(self, validated_data):
+        return Books.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.name=validated_data.get("name")
+        instance.author=validated_data.get("author")
+        instance.price=validated_data.get("price")
+        instance.publisher=validated_data.get("publisher")
+        instance.qty=validated_data.get("qty")
+        instance.save()
+        return instance
+
+
 
 
     def validate(self, data):

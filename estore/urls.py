@@ -18,7 +18,19 @@ from django.urls import path
 # from api.views import ProductView,MorningView,EveningView,AddView,SubView,MulView
 from api.views import CubeView,CheckView,FactView,WordcountView,PrimeView,\
     PallindromeView,ArmstrongView,ProductsView,ProductDetailsView,\
-    ReviewsView,ReviewDetailsView
+    ReviewsView,ReviewDetailsView,ProductsViewsetView,\
+    ProductModelViewsetView,ReviewModelViewsetView,UsersView
+
+
+
+from rest_framework.routers import DefaultRouter
+router=DefaultRouter()
+router.register("api/v1/products",ProductsViewsetView,basename="products")
+router.register("api/v2/products",ProductModelViewsetView,basename="books")
+router.register("api/v1/reviews",ReviewModelViewsetView,basename="reviews")
+router.register("register",UsersView,basename="users")
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("cube",CubeView.as_view()),
@@ -38,4 +50,4 @@ urlpatterns = [
     # path("add",AddView.as_view()),
     # path("sub",SubView.as_view()),
     # path("mul",MulView.as_view())
-]
+]+router.urls
